@@ -4,18 +4,36 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import Store from "./Redux/Store";
+import AlertTemplate from "react-alert-template-basic";
+import { positions, transitions, types, Provider as AlertProvider } from 'react-alert';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const options = {
+  position: positions.TOP_CENTER,
+  timeout: 2000,
+  offset: "30px",
+  transition: transitions.FADE,
+  type: types.SUCCESS
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Provider store={Store}>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <App />
+      </AlertProvider>
+    </Provider>
+  </BrowserRouter>
 );
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.unregister();
+serviceWorkerRegistration.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

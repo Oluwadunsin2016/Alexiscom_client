@@ -1,13 +1,175 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+/* ------ App.js ------ */
+.app {
+  background-color: rgb(240, 240, 240);
+  min-height: 100vh;
+}
+
+.buttonColor{
+background-color: rgb(60, 60, 117) !important;
+}
+
+.textColor{
+color: rgb(60, 60, 117) !important;
+}
+/* ------ Navbar ------ */
+.navbar-collapse,.myNav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user{
+margin-top: -10px;
+}
+
+.logo{
+color: rgb(168, 19, 19);
+font-family: fantasy;
+}
+
+.search-input {
+  border-color: rgb(180, 179, 179) !important;
+  font-size: 20px !important;
+  padding-left: 30px !important;
+}
+.search-input::placeholder {
+  color: rgb(189, 184, 184) !important;
+}
+
+.saved {
+  font-size: 12px !important;
+  margin-top: 5px !important;
+}
+
+/* .navbar {
+  position: sticky;
+} */
+
+/* ------- Product --------- */
+/* .card{
+transition: all 0.5s ease;
+}
+.card:hover{
+transform: scale(1.1);
+} */
+
+.actualPrice {
+  text-decoration: line-through;
+}
+.discount {
+  background-color: rgb(241, 23, 23);
+  color: white;
+  border-radius: 0 10px 10px 0;
+}
+
+/* -------------- Carousel --------------- */
+@media only screen and (max-width: 800px) {
+  .caroImg {
+    width: 100%;
+  }
+}
+
+/* ------------- Product Row --------------- */
+.ProductRow {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+
+.ProductRow::-webkit-scrollbar {
+  display: none;
+}
+
+.chevronLeft,
+.chevronRight {
+display: none;
+  position: absolute;
+  z-index: 10;
+  background-color: rgba(170, 162, 162, 0.5);
+  padding: 10px;
+  border-radius: 100%;
+  margin-top: 12rem;
+  cursor: pointer;
+}
+
+.chevronLeft:hover,
+.chevronRight:hover {
+  background-color: rgb(129, 127, 127);
+}
+
+.chevronLeft {
+  left: 2rem;
+}
+
+.chevronRight {
+  right: 1rem;
+}
+
+.add {
+  margin-top: 40px;
+}
+
+.to_products {
+  margin-right: 10px !important;
+  transition: 0.3s ease-in-out;
+}
+
+.to_products:hover {
+  margin-right: 25px !important;
+}
+
+.to_products_btn {
+  width: 14rem;
+}
+
+/* ----------- Product Details ------------- */
+.img-grid {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  height: 10rem;
+  margin: 20px 0;
+}
+
+.img-wrap {
+  overflow: hidden;
+  height: 10rem;
+  position: relative;
+  border: 1px solid rgb(92, 92, 92);
+}
+
+.img-wrap img {
+  height: 10rem;
+  width: 100%;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* max-width: 150%; */
+}
+
+.current {
+  border: 3px solid rgb(236, 94, 11);
+}
+/* ----------- Footer ------------- */
+.footer a{
+text-decoration: none;
+}
+.footer a:hover{
+text-decoration: underline;
+font-size: 18px;
 }
