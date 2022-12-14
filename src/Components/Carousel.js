@@ -20,8 +20,8 @@ const Carousel = () => {
           </div>
         <div className="container">
           <div className="carousel-caption text-center">
-            <h1>Example headline.</h1>
-            <p>Some representative placeholder content for the first slide of the carousel.</p>
+             <h3>No disappointment.</h3>
+            <p>We deliver your products to you at the appointed time, no delay.</p>
           </div>
         </div>
       </div>
@@ -32,8 +32,9 @@ const Carousel = () => {
 
         <div className="container">
           <div className="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
+           
+            <h3>A trial will convince you.</h3>
+            <p>No regret shopping with us.</p>
           </div>
         </div>
       </div>
@@ -45,8 +46,8 @@ const Carousel = () => {
 
         <div className="container">
           <div className="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
+            <h3>We focus on your interest.</h3>
+            <p>Your convenience is our priority.</p>
           </div>
         </div>
       </div>
@@ -59,8 +60,8 @@ const Carousel = () => {
 
         <div className="container">
           <div className="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
+            <h3>The best shopping platform.</h3>
+            <p>We deliver quality products across Nigeria.</p>
           </div>
         </div>
       </div>
@@ -72,8 +73,8 @@ const Carousel = () => {
         
         <div className="container">
           <div className="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
+            <h3>We're at your service.</h3>
+            <p>Make hey while the sun shines.</p>
           </div>
         </div>
       </div>
@@ -85,8 +86,8 @@ const Carousel = () => {
 
         <div className="container">
           <div className="carousel-caption">
-            <h1>One more for good measure.</h1>
-            <p>Some representative placeholder content for the third slide of this carousel.</p>
+            <h3>You're welcome to a renown shopping platform.</h3>
+            <p>We appreciate all our customers.</p>
           </div>
         </div>
       </div>

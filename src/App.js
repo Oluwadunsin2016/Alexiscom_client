@@ -143,12 +143,6 @@ const myAlert=useAlert()
     }
   };
 
-  const Check=()=>{
-  return(
-  <h1 className="bg-success">It has been successfully added</h1>
-  )
-  }
-
   const goToDetails = (product) => {
     console.log(product);
     localStorage.setItem("viewedItem", JSON.stringify(product));
@@ -226,6 +220,7 @@ const myAlert=useAlert()
         }
       }
     }
+    window.location.reload()
   };
 
   const handleSave = (product) => {
@@ -279,6 +274,7 @@ const myAlert=useAlert()
     } else {
        myAlert.show(<div className="text-lowercase">Login to Saved items</div>,{type:types.ERROR})
     }
+    window.location.reload()
   };
 
   const cartMode = (product) => {
