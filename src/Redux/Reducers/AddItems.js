@@ -4,14 +4,22 @@ let outcome = "";
 const addItems = (state = addItem, action) => {
   if (action.type === "ADDITEM") {
     if (!localStorage.selectedProducts) {
-    action.payload={...action.payload,qty:1,totalPrice:action.payload.price}
+      action.payload = {
+        ...action.payload,
+        qty: 1,
+        totalPrice: action.payload.price,
+      };
       items = [...state, action.payload];
       console.log(items);
       localStorage.setItem("selectedProducts", JSON.stringify(items));
 
       return (items = JSON.parse(localStorage.getItem("selectedProducts")));
     } else {
-    action.payload={...action.payload,qty:1,totalPrice:action.payload.price}
+      action.payload = {
+        ...action.payload,
+        qty: 1,
+        totalPrice: action.payload.price,
+      };
       outcome = JSON.parse(localStorage.getItem("selectedProducts"));
       items = [...outcome, action.payload];
       console.log(items);
@@ -27,13 +35,11 @@ const addItems = (state = addItem, action) => {
     localStorage.setItem("selectedProducts", JSON.stringify(filtered));
     return (items = JSON.parse(localStorage.getItem("selectedProducts")));
   } else {
-  if (localStorage.selectedProducts) {
-    return  state = JSON.parse(
-          localStorage.getItem("selectedProducts")
-        );
-  }else{
-        return state
-  }
+    if (localStorage.selectedProducts) {
+      return (state = JSON.parse(localStorage.getItem("selectedProducts")));
+    } else {
+      return state;
+    }
   }
 };
 

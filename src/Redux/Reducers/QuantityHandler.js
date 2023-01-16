@@ -1,14 +1,14 @@
-let qty=1
+let increasedItems=JSON.parse(localStorage.getItem("selectedProducts"));
 
-const quantityHandler = (state=qty,action) => {
+const quantityHandler = (state=increasedItems,action) => {
  if (action.type=='INCREASE') {
     let outcome = JSON.parse(localStorage.getItem("selectedProducts"));
     const currentId = outcome.findIndex((e) => {
-      return e.id == action.payload;
+      return e.id == action.payload.id;
     });
     console.log(currentId);
     let currentProduct = outcome.find((e) => {
-      return e.id == action.payload;
+      return e.id == action.payload.id;
     });
     currentProduct.qty = currentProduct.qty + 1;
     currentProduct.totalPrice =
@@ -16,21 +16,20 @@ const quantityHandler = (state=qty,action) => {
     outcome[currentId] = currentProduct;
     localStorage.setItem("selectedProducts", JSON.stringify(outcome));
     let items = JSON.parse(localStorage.getItem("selectedProducts"));
-   let reccentProduct = items.find((e) => {
-      return e.id == action.payload;
-    });
- return state=reccentProduct.qty
+    return items
  }else if (action.type=='DECREASE') {
       let outcome = JSON.parse(localStorage.getItem("selectedProducts"));
     const currentId = outcome.findIndex((e) => {
-      return e.id == action.payload;
+      return e.id == action.payload.id;
     });
     console.log(currentId);
     let currentProduct = outcome.find((e) => {
-      return e.id == action.payload;
+      return e.id == action.payload.id;
     });
    if (currentProduct.qty==1) {
-    return
+    localStorage.setItem("selectedProducts", JSON.stringify(outcome));
+    let items = JSON.parse(localStorage.getItem("selectedProducts"));
+    return items
    }else{
     currentProduct.qty = currentProduct.qty - 1;
     currentProduct.totalPrice =
@@ -38,13 +37,11 @@ const quantityHandler = (state=qty,action) => {
     outcome[currentId] = currentProduct;
     localStorage.setItem("selectedProducts", JSON.stringify(outcome));
     let items = JSON.parse(localStorage.getItem("selectedProducts"));
-    let reccentProduct = items.find((e) => {
-      return e.id == action.payload;
-    });
-    return state=reccentProduct.qty;
+    return items;
    }
  }else{
- return state
+    let items = JSON.parse(localStorage.getItem("selectedProducts"));
+    return items
  }
 }
 

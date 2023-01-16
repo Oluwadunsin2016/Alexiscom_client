@@ -9,28 +9,26 @@ import {
   increaseItemQty,
 } from "../../Redux/Actions";
 
-const Cart = ({changedIncreasedToNaira}) => {
-  const state = useSelector((state) => state.addItems);
-  // const quantities = useSelector((state) => state.quantityHandler);
+const Cart = ({ changedIncreasedToNaira }) => {
   const dispatch = useDispatch();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
-  const myAlert= useAlert()
+  const myAlert = useAlert();
 
+  const state = useSelector((state) => state.quantityHandler);
 
-  const handleClose = (cartItem) => {
-    dispatch(deleteItem(cartItem));
+  const goToCheckOut = () => {
+    if (localStorage.myToken) {
+      navigate("/checkout");
+    } else {
+      alert("");
+      myAlert.show(
+        <div className="text-lowercase">You haven't logged in</div>,
+        { type: types.ERROR }
+      );
+      navigate("/signin");
+    }
   };
-
-  const goToCheckOut=()=>{
-  if (localStorage.myToken) {
-    navigate("/checkout")
-  }else{
-  alert("") 
-   myAlert.show(<div className="text-lowercase">You haven't logged in</div>,{type:types.ERROR})
-    navigate("/signin")
-  }
-  }
 
   const cartItems = (cartItem) => {
     return (
@@ -48,27 +46,28 @@ const Cart = ({changedIncreasedToNaira}) => {
             <div className="w-100 ps-4">
               <div className="mt-4 d-md-flex justify-content-between">
                 <h5>{cartItem.title}</h5>
-                <p className="lead ms-2">&#8358;{changedIncreasedToNaira(cartItem)}</p>
+                <p className="lead ms-2">
+                  &#8358;{changedIncreasedToNaira(cartItem)}
+                </p>
               </div>
 
               <div className="mt-4 d-md-flex justify-content-between">
                 <button
-                  onClick={() => handleClose(cartItem)}
+                  onClick={() => dispatch(deleteItem(cartItem))}
                   className="btn textColor"
                 >
                   <FaTrash className="fs-5" /> REMOVE
                 </button>
                 <div>
                   <button
-                    onClick={() => dispatch(decreaseItemQty(cartItem.id))}
+                    onClick={() =>dispatch(decreaseItemQty(cartItem))}
                     className="btn buttonColor text-white fw-bold me-2"
                   >
                     -
                   </button>
                   {cartItem.qty}
-                  {/* {quantities} */}
                   <button
-                    onClick={() => dispatch(increaseItemQty(cartItem.id))}
+                    onClick={() => dispatch(increaseItemQty(cartItem))}
                     className="btn buttonColor text-white fw-bold ms-2"
                   >
                     +
@@ -97,7 +96,8 @@ const Cart = ({changedIncreasedToNaira}) => {
   const checkOut = () => {
     return (
       <div className="row my-4 px-3">
-        <button onClick={goToCheckOut}
+        <button
+          onClick={goToCheckOut}
           className="btn buttonColor text-white col-md-4 mx-auto mb-4"
         >
           Proceed to Checkout

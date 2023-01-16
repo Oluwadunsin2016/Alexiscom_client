@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, Navigate } from "react-router-dom";
 import Cart from "./Components/pages/Cart";
 import Home from "./Components/pages/Home";
 import Navbar from "./Components/Navbar";
@@ -14,14 +14,13 @@ import { addItem, deleteItem, removeItem, saveItem } from "./Redux/Actions";
 import SignIn from "./Components/pages/SignIn";
 import SignUp from "./Components/pages/SignUp";
 import Footer from "./Components/Footer";
-import Account from "./Components/pages/Account";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SavedProducts from "./Components/pages/SavedProducts";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import SearchedProducts from "./Components/pages/SearchedProducts";
 import { SkeletonTheme } from "react-loading-skeleton";
+import { types, useAlert } from "react-alert";
 import PageNotFound from "./Components/PageNotFound";
-import {types, useAlert } from "react-alert";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -29,15 +28,19 @@ function App() {
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cartStatus, setCartStatus] = useState("Add to Cart");
+  const [heart, setHeart] = useState(
+    <FaRegHeart className="mt-3 text-danger" />
+  );
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
   }, []);
 
-const myAlert=useAlert()
-
+  const myAlert = useAlert();
 
   const fetchData = () => {
     axios
@@ -51,7 +54,6 @@ const myAlert=useAlert()
         setError(err.message);
       });
   };
-
 
   useEffect(() => {
     const token = localStorage.myToken;
@@ -112,6 +114,7 @@ const myAlert=useAlert()
       return `${converted}.00`;
     }
   };
+
   const changedToNaira = (product) => {
     const converted = JSON.stringify(product.price * 440);
     if (converted.length > 9) {
@@ -149,9 +152,13 @@ const myAlert=useAlert()
     navigate(`/products/${product.id}`);
   };
 
-  const dispatch = useDispatch();
-
   const handleCart = (product) => {
+    if (cartStatus === "Add to Cart") {
+      setCartStatus("Remove from Cart");
+    } else {
+      setCartStatus("Add to Cart");
+    }
+
     if (localStorage.savedProducts) {
       const allProducts = JSON.parse(localStorage.getItem("savedProducts"));
       const existed = allProducts.find((e) => {
@@ -161,7 +168,10 @@ const myAlert=useAlert()
         if (!localStorage.selectedProducts) {
           dispatch(removeItem(product));
           dispatch(addItem(product));
-          myAlert.show(<div className="text-lowercase">Sucessfully added to cart</div>,{type:types.SUCCESS})
+          myAlert.show(
+            <div className="text-lowercase">Sucessfully added to cart</div>,
+            { type: types.SUCCESS }
+          );
         } else {
           const allProducts = JSON.parse(
             localStorage.getItem("selectedProducts")
@@ -172,17 +182,28 @@ const myAlert=useAlert()
           if (!addedItem) {
             dispatch(removeItem(product));
             dispatch(addItem(product));
-            myAlert.show(<div className="text-lowercase">Sucessfully added to cart</div>,{type:types.SUCCESS})
+            myAlert.show(
+              <div className="text-lowercase">Sucessfully added to cart</div>,
+              { type: types.SUCCESS }
+            );
           } else {
             dispatch(deleteItem(product));
-            myAlert.show(<div className="text-lowercase">Sucessfully deleted from cart</div>,{type:types.SUCCESS})
+            myAlert.show(
+              <div className="text-lowercase">
+                Sucessfully deleted from cart
+              </div>,
+              { type: types.SUCCESS }
+            );
           }
         }
       } else {
         if (!localStorage.selectedProducts) {
           dispatch(removeItem(product));
           dispatch(addItem(product));
-          myAlert.show(<div className="text-lowercase">Sucessfully added to cart</div>,{type:types.SUCCESS})
+          myAlert.show(
+            <div className="text-lowercase">Sucessfully added to cart</div>,
+            { type: types.SUCCESS }
+          );
         } else {
           const allProducts = JSON.parse(
             localStorage.getItem("selectedProducts")
@@ -193,17 +214,28 @@ const myAlert=useAlert()
           if (!addedItem) {
             dispatch(removeItem(product));
             dispatch(addItem(product));
-            myAlert.show(<div className="text-lowercase">Sucessfully added to cart</div>,{type:types.SUCCESS})
+            myAlert.show(
+              <div className="text-lowercase">Sucessfully added to cart</div>,
+              { type: types.SUCCESS }
+            );
           } else {
             dispatch(deleteItem(product));
-            myAlert.show(<div className="text-lowercase">Sucessfully deleted from cart</div>,{type:types.SUCCESS})
+            myAlert.show(
+              <div className="text-lowercase">
+                Sucessfully deleted from cart
+              </div>,
+              { type: types.SUCCESS }
+            );
           }
         }
       }
     } else {
       if (!localStorage.selectedProducts) {
-        dispatch(addItem(product))
-        myAlert.show(<div className="text-lowercase">Sucessfully added to cart</div>,{type:types.SUCCESS})
+        dispatch(addItem(product));
+        myAlert.show(
+          <div className="text-lowercase">Sucessfully added to cart</div>,
+          { type: types.SUCCESS }
+        );
       } else {
         const allProducts = JSON.parse(
           localStorage.getItem("selectedProducts")
@@ -213,17 +245,28 @@ const myAlert=useAlert()
         });
         if (!existed) {
           dispatch(addItem(product));
-          myAlert.show(<div className="text-lowercase">Sucessfully added to cart</div>,{type:types.SUCCESS})
+          myAlert.show(
+            <div className="text-lowercase">Sucessfully added to cart</div>,
+            { type: types.SUCCESS }
+          );
         } else {
           dispatch(deleteItem(product));
-          myAlert.show(<div className="text-lowercase">Sucessfully deleted from cart</div>,{type:types.SUCCESS})
+          myAlert.show(
+            <div className="text-lowercase">Sucessfully deleted from cart</div>,
+            { type: types.SUCCESS }
+          );
         }
       }
     }
-    window.location.reload()
   };
 
   const handleSave = (product) => {
+    if (heart === <FaRegHeart className="mt-3 text-danger" />) {
+      setHeart(<FaHeart className="mt-3 text-danger" />);
+    } else {
+      setHeart(<FaRegHeart className="mt-3 text-danger" />);
+    }
+
     if (localStorage.myToken) {
       if (localStorage.selectedProducts) {
         let products = JSON.parse(localStorage.getItem("selectedProducts"));
@@ -232,11 +275,19 @@ const myAlert=useAlert()
         });
 
         if (productAdded) {
-          myAlert.show(<div className="text-lowercase">You can't save the item, it has already been added to cart</div>,{type:types.ERROR})
+          myAlert.show(
+            <div className="text-lowercase">
+              You can't save the item, it has already been added to cart
+            </div>,
+            { type: types.ERROR }
+          );
         } else {
           if (!localStorage.savedProducts) {
             dispatch(saveItem(product));
-             myAlert.show(<div className="text-lowercase">Saved successfully</div>,{type:types.SUCCESS})
+            myAlert.show(
+              <div className="text-lowercase">Saved successfully</div>,
+              { type: types.SUCCESS }
+            );
           } else {
             const allProducts = JSON.parse(
               localStorage.getItem("savedProducts")
@@ -246,17 +297,26 @@ const myAlert=useAlert()
             });
             if (!existed) {
               dispatch(saveItem(product));
-               myAlert.show(<div className="text-lowercase">Saved successfully</div>,{type:types.SUCCESS})
+              myAlert.show(
+                <div className="text-lowercase">Saved successfully</div>,
+                { type: types.SUCCESS }
+              );
             } else {
               dispatch(removeItem(product));
-               myAlert.show(<div className="text-lowercase">Deleted successfully</div>,{type:types.SUCCESS})
+              myAlert.show(
+                <div className="text-lowercase">Deleted successfully</div>,
+                { type: types.SUCCESS }
+              );
             }
           }
         }
       } else {
         if (!localStorage.savedProducts) {
           dispatch(saveItem(product));
-           myAlert.show(<div className="text-lowercase">Saved successfully</div>,{type:types.SUCCESS})
+          myAlert.show(
+            <div className="text-lowercase">Saved successfully</div>,
+            { type: types.SUCCESS }
+          );
         } else {
           const allProducts = JSON.parse(localStorage.getItem("savedProducts"));
           const existed = allProducts.find((e) => {
@@ -264,17 +324,24 @@ const myAlert=useAlert()
           });
           if (!existed) {
             dispatch(saveItem(product));
-             myAlert.show(<div className="text-lowercase">Saved successfully</div>,{type:types.SUCCESS})
+            myAlert.show(
+              <div className="text-lowercase">Saved successfully</div>,
+              { type: types.SUCCESS }
+            );
           } else {
             dispatch(removeItem(product));
-             myAlert.show(<div className="text-lowercase">Deleted successfully</div>,{type:types.SUCCESS})
+            myAlert.show(
+              <div className="text-lowercase">Deleted successfully</div>,
+              { type: types.SUCCESS }
+            );
           }
         }
       }
     } else {
-       myAlert.show(<div className="text-lowercase">Login to Saved items</div>,{type:types.ERROR})
+      myAlert.show(<div className="text-lowercase">Login to Saved items</div>, {
+        type: types.ERROR,
+      });
     }
-    window.location.reload()
   };
 
   const cartMode = (product) => {
@@ -293,6 +360,7 @@ const myAlert=useAlert()
       return "Add to Cart";
     }
   };
+
   const saveMode = (product) => {
     if (localStorage.myToken) {
       if (localStorage.savedProducts) {
@@ -314,13 +382,33 @@ const myAlert=useAlert()
     }
   };
 
+  const NavbarHandler = () => {
+    const location = useLocation();
+    if (location.pathname === "/404") {
+      return null;
+    }
+    return (
+      <Navbar setSearchedProducts={setSearchedProducts} products={products} />
+    );
+  };
+
+  const FooterHandler = () => {
+    const location = useLocation();
+    if (location.pathname === "/404") {
+      return null;
+    }
+    return (
+      <Footer />
+    );
+  };
 
   return (
-    <div className="app">
-    {/* <Route path="*" element={<PageNotFound />} /> */}
-      <Navbar setSearchedProducts={setSearchedProducts} products={products} />
+    <div>
+      <NavbarHandler />
       <SkeletonTheme baseColor="#b4b3b3" highlightColor="#dbdbdd">
         <Routes>
+          <Route path="*" element={<Navigate to="/404"/>}/>
+          <Route path="/404" element={<PageNotFound/>}/>
           <Route
             path="/"
             element={
@@ -377,14 +465,6 @@ const myAlert=useAlert()
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route
-            path="/account"
-            element={
-              <ProtectedRoute>
-                <Account />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/checkout"
             element={
               <ProtectedRoute>
@@ -419,23 +499,23 @@ const myAlert=useAlert()
           <Route
             path="/search"
             element={
-                <SearchedProducts
-                  products={searchedProducts}
-                  handleCart={handleCart}
-                  goToDetails={goToDetails}
-                  truncatedString={truncatedString}
-                  changedToNaira={changedToNaira}
-                  actuaPrice={actuaPrice}
-                  discountPercentage={discountPercentage}
-                  cartMode={cartMode}
-                  handleSave={handleSave}
-                  saveMode={saveMode}
-                />
+              <SearchedProducts
+                products={searchedProducts}
+                handleCart={handleCart}
+                goToDetails={goToDetails}
+                truncatedString={truncatedString}
+                changedToNaira={changedToNaira}
+                actuaPrice={actuaPrice}
+                discountPercentage={discountPercentage}
+                cartMode={cartMode}
+                handleSave={handleSave}
+                saveMode={saveMode}
+              />
             }
           />
         </Routes>
       </SkeletonTheme>
-      <Footer />
+      <FooterHandler />
     </div>
   );
 }

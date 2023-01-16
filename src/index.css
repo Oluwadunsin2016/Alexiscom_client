@@ -165,6 +165,23 @@ display: none;
 .current {
   border: 3px solid rgb(236, 94, 11);
 }
+/* ----------- Page not found ------------- */
+.to_home{
+width: 250px;
+}
+.to_home:active{
+border: none;
+}
+
+.go_home{
+text-decoration: underline;
+margin-right: 5px;
+transition: 0.3s ease-in-out;
+}
+.go_home:hover{
+margin-right: 25px;
+}
+
 /* ----------- Footer ------------- */
 .footer a{
 text-decoration: none;
