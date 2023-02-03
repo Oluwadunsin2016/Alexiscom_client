@@ -10,7 +10,6 @@ const addItems = (state = addItem, action) => {
         totalPrice: action.payload.price,
       };
       items = [...state, action.payload];
-      console.log(items);
       localStorage.setItem("selectedProducts", JSON.stringify(items));
 
       return (items = JSON.parse(localStorage.getItem("selectedProducts")));
@@ -22,7 +21,6 @@ const addItems = (state = addItem, action) => {
       };
       outcome = JSON.parse(localStorage.getItem("selectedProducts"));
       items = [...outcome, action.payload];
-      console.log(items);
       localStorage.setItem("selectedProducts", JSON.stringify(items));
 
       return (items = JSON.parse(localStorage.getItem("selectedProducts")));

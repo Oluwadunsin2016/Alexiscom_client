@@ -1,13 +1,11 @@
   import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-  // import logo from './logo.svg';
-  // import './App.css';
 import { usePaystackPayment } from 'react-paystack';
 import { useNavigate } from 'react-router-dom';
   
 
 
-const Payment = ({orderData,total,address,zipCode,country,city}) => {
+const Payment = ({orderData,total,address,zipCode,country,city,user}) => {
 const [converted, setConverted] = useState(null)
 const navigate=useNavigate()
 
@@ -27,7 +25,7 @@ const changed=JSON.stringify(total * 440)
   
   const onSuccess = (reference) => {
     reference={...reference, products: orderData.products,...orderData.customer,...orderData.shipping,total};
-    axios.post(`http://localhost:3700/customer/sendMail`,reference).then(res=>{
+    axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT_LOCAL}sendMail`,reference).then(res=>{
     console.log(res);
     })
     console.log(reference);
@@ -44,7 +42,7 @@ const changed=JSON.stringify(total * 440)
       const initializePayment = usePaystackPayment(config);
       return (
         <div>
-            <button disabled={address=='' || zipCode=='' || country=='' || city==''} className="btn buttonColor text-white" onClick={() => {
+            <button disabled={address=='' || zipCode=='' || country=='' || city==''|| user.firstname=='' || user.lastname=='' || user.email==''} className="btn buttonColor text-white" onClick={() => {
                 initializePayment(onSuccess, onClose)
             }}>Proceed to make payment</button>
         </div>

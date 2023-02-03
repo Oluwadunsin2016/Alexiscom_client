@@ -15,13 +15,14 @@ const Cart = ({ changedIncreasedToNaira }) => {
 
   const myAlert = useAlert();
 
-  const state = useSelector((state) => state.quantityHandler);
+  const cartProducts = useSelector((state) => state.quantityHandler);
+const state=cartProducts?cartProducts:[]
+
 
   const goToCheckOut = () => {
     if (localStorage.myToken) {
       navigate("/checkout");
     } else {
-      alert("");
       myAlert.show(
         <div className="text-lowercase">You haven't logged in</div>,
         { type: types.ERROR }
@@ -115,6 +116,13 @@ const Cart = ({ changedIncreasedToNaira }) => {
           {state.length > 0 && checkOut()}
         </div>
       </div>
+
+
+       {/* <div className=" bg-light my-4">
+          {state && state.length == 0 && emptyCart()}
+          {state && state.length>0 && state.map(cartItems)}
+          {state && state.length>0 && checkOut()}
+        </div> */}
     </>
   );
 };

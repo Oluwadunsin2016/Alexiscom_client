@@ -390,7 +390,7 @@ setCities(result)
                 <Link to="/cart" className="btn btn-outline-danger">
                   Back
                 </Link>
-                <Payment  total={total} zipCode={zipCode} country={country} city={cities} address={address} orderData={orderData} />
+                <Payment  total={total} zipCode={zipCode} country={country} city={cities} address={address} orderData={orderData} user={user} />
               </div>
             </div>
           </div>

@@ -13,7 +13,7 @@ const SignIn = () => {
 
   const navigate=useNavigate()
 
-  const URL = "http://localhost:3700/customer/login";
+  const URL = `${process.env.REACT_APP_SERVER_ENDPOINT_LOCAL}login`;
 
   const handleSubmit = (e) => {
     e.preventDefault();

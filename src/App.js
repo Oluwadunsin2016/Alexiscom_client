@@ -59,7 +59,7 @@ function App() {
     const token = localStorage.myToken;
     if (token) {
       axios
-        .get(`http://localhost:3700/customer/profile`, {
+        .get(`${process.env.REACT_APP_SERVER_ENDPOINT_LOCAL}profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
@@ -104,7 +104,6 @@ function App() {
       const num = converted.length - 6;
       const thouEnd = converted.slice(-3);
       const mil = converted.slice(1, 4);
-
       return `${converted.slice(0, num)},${mil},${thouEnd}.00`;
     } else if (converted.length > 3) {
       const num = converted.length - 3;
