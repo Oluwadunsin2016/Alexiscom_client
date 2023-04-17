@@ -23,6 +23,8 @@ const SignIn = () => {
       localStorage.myToken = res.data.token;
       setMessage(res.data.message);
       navigate('/')
+    }).catch((err)=>{
+    console.log(err);
     });
     
   };

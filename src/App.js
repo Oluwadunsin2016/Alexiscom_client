@@ -59,7 +59,7 @@ function App() {
     const token = localStorage.myToken;
     if (token) {
       axios
-        .get(`${process.env.REACT_APP_SERVER_ENDPOINT_LOCAL}profile`, {
+        .get(`${process.env.REACT_APP_SERVER_ENDPOINT_DEPLOYED}profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",

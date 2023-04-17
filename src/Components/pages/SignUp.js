@@ -20,7 +20,7 @@ setcustomerDetails({...customerDetails,[name]:value})
 }
 const handleSubmit=(e)=>{
 e.preventDefault()
-axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT_LOCAL}register`,customerDetails).then(res=>{
+axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT_DEPLOYED}register`,customerDetails).then(res=>{
 console.log(res);
 setMessage(res.data.message)
 navigate('/signin')

@@ -25,7 +25,7 @@ const changed=JSON.stringify(total * 440)
   
   const onSuccess = (reference) => {
     reference={...reference, products: orderData.products,...orderData.customer,...orderData.shipping,total};
-    axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT_LOCAL}sendMail`,reference).then(res=>{
+    axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT_DEPLOYED}sendMail`,reference).then(res=>{
     console.log(res);
     })
     console.log(reference);
